@@ -30,9 +30,8 @@ while(<IN>){
 	chomp;
 	@entry = split /\s/;
 	$id = $chrom . ':' . $entry[2];
-	if($entry[0] eq '---'){
-		$entry[0] = $id;
-	}
+	$entry[0] = $id;
+	
 	if($entry[1] eq '---'){
 		$entry[1] = $id;
 	}
