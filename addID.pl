@@ -9,7 +9,7 @@ use IO::Zlib;
 
 sub usage{
 	print STDERR basename($0) . " <chrom> <file>\n";
-	print STDERR "  chrom: Chromosome name to use for variants in thei file.\n";
+	print STDERR "  chrom: Chromosome name to use for variants in the file.\n";
 	print STDERR "  file: Genotyping file.\n";
 	
 	exit;	
