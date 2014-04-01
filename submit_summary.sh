@@ -6,5 +6,5 @@ SAMPLE=$3
 OUT=$4
 for file in $PREFIX*$SUFFIX
 do
-	qsub -cwd -V getSummary.sh $OUT $FILE $SAMPLE
+qsub -cwd -V getSummary.sh $OUT $file $SAMPLE
 done
