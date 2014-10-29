@@ -101,7 +101,7 @@ A list of poor quality genotypes can be obtained with the [getExclusions](getExc
 script. This provides facilities to specify upper and lower bounds on the values allowed
 for columns in the summary file. All SNPs with at least one value outside the specified ranges 
 will be written to an exclusion file. This file, together with all imputed genotypes, 
-will then serve as input to [filterGeno.pl], which in turn produces
+will then serve as input to [filterGeno.pl](filterGeno.pl), which in turn produces
 a genotype file with all genotypes that were marked for exclusion removed.
 
 ## Combining results
