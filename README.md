@@ -89,11 +89,11 @@ genome into 5MB chunks and generate the corresponding imputation jobs on an SGE 
 ## Quality control
 Once genotypes have been imputed they have to be screened for low quality imputations
 so that these can be removed. Here we use `snptest` to generate quality metrics for
-all variants. The [getSummary](getSummary.sh) script will generate useful summaries
-for a single file (i.e. chunk). Jobs for all chunks can be generated and submitted to
-an SGE cluster using the corresponding [submission script](sge/submit_summary.sh).
+all variants. The [submit_snptest](sge/submit_snptest.pl) script will generate useful summaries
+from imputed genotypes. By default jobs for several chunks can be generated and submitted to
+an SGE cluster using this script. To run `snptest` locally instead use `--submit ""`.
 The submission script expects four arguments that specify a common prefix and common suffix
-for the files with imputed genotypes, followed by the name of the sample file and 
+for the files with imputed genotypes, followed by the name of the sample and 
 output file.
 
 The resulting summary files can then be used to identify SNPs that should be excluded.
