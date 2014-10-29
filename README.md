@@ -1,9 +1,9 @@
 # Imputing and filtering genotypes
 This repository contains scripts for imputing and filtering genotypes with 
-[http://mathgen.stats.ox.ac.uk/impute/impute_v2.html](IMPUTE2). Other software tools 
-used include [http://pngu.mgh.harvard.edu/~purcell/plink/](plink) for pre-processing,
-[http://www.shapeit.fr/](shapeit) for pre-phasing and 
-[https://mathgen.stats.ox.ac.uk/genetics_software/snptest/snptest.html](snptest) for QC.
+[IMPUTE2](http://mathgen.stats.ox.ac.uk/impute/impute_v2.html). Other software tools 
+used include [plink](http://pngu.mgh.harvard.edu/~purcell/plink/) for pre-processing,
+[shapeit](http://www.shapeit.fr/) for pre-phasing and 
+[snptest](https://mathgen.stats.ox.ac.uk/genetics_software/snptest/snptest.html) for QC.
 
 Some of these scripts were written for use on an SGE cluster and contain commands to
 submit jobs to the cluster. These submission scripts are appropriate for the environment
@@ -20,17 +20,17 @@ Imputation of SNPs on sex chromosomes will require some changes.**
 
 ## Reference panel
 The IMPUTE2 website provides several 
-[http://mathgen.stats.ox.ac.uk/impute/impute_v2.html#reference](reference datasets) 
+[reference datasets](http://mathgen.stats.ox.ac.uk/impute/impute_v2.html#reference) 
 for download. This includes all files required for imputation.
 
 ## Pre-phasing genotypes
-Prior to to the actual imputation we use [http://www.shapeit.fr/](shapeit) to phase 
+Prior to to the actual imputation we use [shapeit](http://www.shapeit.fr/) to phase 
 the study genotypes. This allows phasing of entire chromosomes, 
 rather than the small chunks used for imputation, and allows for faster 
 imputation afterwards.
 
 ### Strand alignment
-**The code in this section is available as a script [alignStrand.sh](from this repository).**
+**The code in this section is available as a script [from this repository](alignStrand.sh).**
 
 Before the study genotypes can be phased it is important to ensure that alleles 
 in the study as well as the reference panel are reported on the same strand. 
@@ -65,7 +65,7 @@ done
 
 ### Phasing
 The (binary) ped files created above can then be used as input for phasing with `shapeit`. 
-The [sge/getHaplotypes.sh](getHaplotypes) script can be used to submit the necessary 
+The [getHaplotypes](sge/getHaplotypes.sh) script can be used to submit the necessary 
 jobs to the cluster. Assuming that the ped files are located in the current working 
 directory and that phased haplotypes should be written to the `phased/` 
 sub-directory, the following command will generate the necessary jobs on the cluster:
@@ -82,32 +82,32 @@ reference panel should be used.
 The phased haplotypes obtained above can be used as input to `IMPUTE2`, 
 which can then impute genotypes from the reference panel with a single iteration. 
 Imputation is carried out for small regions of the genome rather than entire chromosomes. 
-The [sge/imputeChunks.pl](imputeChunks) script can automatically partition the 
+The [imputeChunks](sge/imputeChunks.pl) script can automatically partition the 
 genome into 5MB chunks and generate the corresponding imputation jobs on an SGE cluster
 (*the command used for job submission can be customised on the command-line*).
 
 ## Quality control
 Once genotypes have been imputed they have to be screened for low quality imputations
 so that these can be removed. Here we use `snptest` to generate quality metrics for
-all variants. The [getSummary.sh](getSummary) script will generate useful summaries
+all variants. The [getSummary](getSummary.sh) script will generate useful summaries
 for a single file (i.e. chunk). Jobs for all chunks can be generated and submitted to
-an SGE cluster using the corresponding [sge/submit_summary.sh](submission script).
+an SGE cluster using the corresponding [submission script](sge/submit_summary.sh).
 The submission script expects four arguments that specify a common prefix and common suffix
 for the files with imputed genotypes, followed by the name of the sample file and 
 output file.
 
 The resulting summary files can then be used to identify SNPs that should be excluded.
-A list of poor quality genotypes can be obtained with the [getExclusions.pl](getExclusions)
+A list of poor quality genotypes can be obtained with the [getExclusions](getExclusions.pl)
 script. This provides facilities to specify upper and lower bounds on the values allowed
 for columns in the summary file. All SNPs with at least one value outside the specified ranges 
-will be written to an exclusion file. This file will then serve as input to 
-[filterGeno.pl](filterGeno.pl) (together with all imputed genotypes), which in turn produces
+will be written to an exclusion file. This file, together with all imputed genotypes, 
+will then serve as input to [filterGeno.pl], which in turn produces
 a genotype file with all genotypes that were marked for exclusion removed.
 
 ## Combining results
 Once low quality genotypes have been removed the chunks of imputed genotypes can be merged
-into larger files, e.g. one per chromosome, using [mergeChunks.pl](mergeChunks.pl).
+into larger files, e.g. one per chromosome, using [mergeChunks.pl].
 
 ## Preparing imputed genotypes for use with Matrix-eQTL
 To convert the genotyping data into a format that can be used with Matrix-eQTL the 
-[jknightlab/genotype-tools/gen2me.pl] can be used.
+[gen2me](jknightlab/genotype-tools/gen2me.pl) script can be used.
